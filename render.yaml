@@ -1,0 +1,26 @@
+# render.yaml
+# Configurazione per deploy automatico su Render.com di frontend (React) e backend (FastAPI)
+
+services:
+  - type: web
+    name: enigma2-emulator-backend
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port 10000"
+    envVars:
+      - key: PORT
+        value: 10000
+    repo: https://github.com/<tuo-utente>/<tuo-repo>
+    branch: main
+    rootDir: backend
+
+  - type: web
+    name: enigma2-emulator-frontend
+    env: static
+    plan: free
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "dist"
+    repo: https://github.com/<tuo-utente>/<tuo-repo>
+    branch: main
+    rootDir: frontend
